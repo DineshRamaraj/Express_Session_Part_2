@@ -13,16 +13,6 @@ const initializeDbAndServer = async () => {
       driver: sqlite3.Database,
     });
 
-    app.get("/books/", async (request, response) => {
-      const getBooksQuery = `
-        SELECT * FROM book ORDER BY book_id`;
-
-      console.log(getBooksQuery);
-      //   const booksArray = await db.get(getBooksQuery);
-      const booksArray = await db.all(getBooksQuery);
-      console.log(booksArray);
-    });
-
     app.listen(3000, () => {
       console.log("Server Running at http://localhost:3000/");
     });
@@ -33,3 +23,20 @@ const initializeDbAndServer = async () => {
 };
 
 initializeDbAndServer();
+
+app.get("/books/", async (request, response) => {
+  const getBooksQuery = `
+        SELECT 
+        *
+        FROM
+        book 
+        ORDER BY 
+        book_id`;
+
+  console.log(getBooksQuery);
+  //   const booksArray = await db.get(getBooksQuery);
+  const booksArray = await db.all(getBooksQuery);
+  //   console.log(booksArray);
+
+  response.send(booksArray);
+});
